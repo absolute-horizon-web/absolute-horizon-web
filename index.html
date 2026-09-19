@@ -3,576 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absolute Horizon Tech S.A.C. | Finanzas & Tecnología</title>
+    <title>Dashboard | Absolute Horizon Inversiones</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        burgundy: {
-                            DEFAULT: '#800020',
-                            50: '#fcf3f5',
-                            100: '#f6e4e7',
-                            200: '#eccdd4',
-                            300: '#dfaeb8',
-                            400: '#cd8494',
-                            500: '#b75b6e',
-                            600: '#9f4255',
-                            700: '#800020', // Base
-                            800: '#6f2b38',
-                            900: '#5f2732',
-                            950: '#331219',
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
                         },
-                        slate: {
-                            850: '#151e2e',
+                        dark: {
+                            bg: '#0f172a',
+                            panel: '#1e293b',
+                            border: '#334155'
                         }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'scroll-left': 'scrollLeft 30s linear infinite',
-                        'scroll-right': 'scrollRight 30s linear infinite',
-                    },
-                    keyframes: {
-                        scrollLeft: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        },
-                        scrollRight: {
-                            '0%': { transform: 'translateX(-50%)' },
-                            '100%': { transform: 'translateX(0)' },
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #800020; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #5f2732; }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-        
-        /* Ticker Container Setup */
-        .ticker-container {
-            display: flex;
-            width: 200%; /* Double width to allow seamless scrolling of duplicated content */
-        }
-        .ticker-wrap {
-            overflow: hidden;
-            white-space: nowrap;
-        }
+        body { background-color: #0f172a; color: #e2e8f0; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid #334155; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="flex h-screen overflow-hidden font-sans antialiased">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur shadow-sm" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                    <div class="w-10 h-10 bg-burgundy-700 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                        <i class="fa-solid fa-infinity"></i>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight text-slate-900">Absolute Horizon<span class="text-burgundy-700">.</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#inicio" class="text-slate-600 hover:text-burgundy-700 font-medium transition-colors">Inicio</a>
-                    <a href="#servicios" class="text-slate-600 hover:text-burgundy-700 font-medium transition-colors">Servicios</a>
-                    <a href="#inversiones" class="text-slate-600 hover:text-burgundy-700 font-medium transition-colors">Inversiones</a>
-                    <a href="#herramientas" class="text-slate-600 hover:text-burgundy-700 font-medium transition-colors">Herramientas</a>
-                    <a href="#" class="bg-burgundy-700 hover:bg-burgundy-800 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Portal de Clientes</a>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button class="text-slate-600 hover:text-burgundy-700 focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
+    <!-- Sidebar -->
+    <aside class="w-64 bg-dark-panel border-r border-dark-border hidden md:flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-dark-border">
+            <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold mr-3 shadow-lg shadow-brand-500/30">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+            <span class="font-bold text-lg text-white tracking-tight">Absolute Horizon</span>
+        </div>
+        
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <p class="px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Mi Portafolio</p>
+            <a href="#" class="flex items-center px-3 py-2.5 bg-brand-600/10 text-brand-500 rounded-lg group transition-colors">
+                <i class="fa-solid fa-house w-6 text-center"></i>
+                <span class="font-medium ml-2">Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-wallet w-6 text-center"></i>
+                <span class="font-medium ml-2">Mis Activos</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-chart-line w-6 text-center"></i>
+                <span class="font-medium ml-2">Rendimientos</span>
+            </a>
+
+            <p class="px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mt-8 mb-2">Mercados</p>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-earth-americas w-6 text-center"></i>
+                <span class="font-medium ml-2">ETFs UCITS</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-building w-6 text-center"></i>
+                <span class="font-medium ml-2">FIBRAs (BVL)</span>
+            </a>
+
+            <p class="px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mt-8 mb-2">Herramientas</p>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-calculator w-6 text-center"></i>
+                <span class="font-medium ml-2">Int. Compuesto</span>
+            </a>
+            <a href="#" class="flex items-center px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg group transition-colors">
+                <i class="fa-solid fa-scale-balanced w-6 text-center"></i>
+                <span class="font-medium ml-2">Brokers (Trii / XTB)</span>
+            </a>
+        </nav>
+        
+        <div class="p-4 border-t border-dark-border">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold">Inversor</div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-white">Cuenta Demo</p>
+                    <p class="text-xs text-slate-400">Plan Básico</p>
                 </div>
             </div>
         </div>
-    </nav>
+    </aside>
 
-    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-900 text-white">
-        <!-- Background decorative elements -->
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-burgundy-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
-            <div class="absolute top-0 right-72 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-20 w-96 h-96 bg-burgundy-800 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
-        </div>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-dark-bg">
+        <!-- Topbar -->
+        <header class="h-16 glass-panel flex items-center justify-between px-6 z-10">
+            <div class="flex items-center md:hidden">
+                <button class="text-slate-400 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <span class="ml-4 font-bold text-lg text-white">Absolute Horizon</span>
+            </div>
+            <div class="hidden md:flex items-center bg-slate-800/50 rounded-lg px-3 py-1.5 border border-slate-700 w-96">
+                <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                <input type="text" placeholder="Buscar Ticker (ej. CSPX, FIBRA)..." class="bg-transparent border-none text-sm text-white focus:outline-none w-full ml-2 placeholder-slate-500">
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="relative text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-500 rounded-full border-2 border-dark-bg"></span>
+                </button>
+            </div>
+        </header>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
-                    Conectando <span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-400 to-burgundy-600">Tecnología</span> y <span class="text-transparent bg-clip-text bg-gradient-to-r from-burgundy-400 to-burgundy-600">Finanzas</span>
-                </h1>
-                <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed">
-                    Absolute Horizon Tech S.A.C. provee soluciones de infraestructura IT de clase mundial, ciberseguridad avanzada y asesoría integral para optimizar tus inversiones en los mercados globales y locales.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#servicios" class="bg-burgundy-700 hover:bg-burgundy-600 text-white px-8 py-3.5 rounded-full font-semibold transition-all shadow-lg hover:shadow-burgundy-700/30 flex items-center justify-center gap-2">
-                        Nuestros Servicios <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                    <a href="#inversiones" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-3.5 rounded-full font-semibold transition-all backdrop-blur-sm flex items-center justify-center gap-2">
-                        Hub de Inversiones <i class="fa-solid fa-chart-line"></i>
-                    </a>
+        <!-- Scrollable Dashboard Content -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-6">
+            
+            <!-- Welcome Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-white mb-1">Resumen de Inversiones</h1>
+                    <p class="text-sm text-slate-400">Analiza el rendimiento de tus ETFs y activos locales hoy.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-slate-950 border-b-4 border-burgundy-700 py-3 overflow-hidden shadow-inner relative z-20">
-        <div class="flex items-center">
-            <div class="bg-burgundy-700 text-white text-xs font-bold px-4 py-3 z-10 absolute left-0 flex items-center shadow-md uppercase tracking-wider h-full">
-                US Markets
-            </div>
-            <div class="ticker-wrap w-full ml-24 pl-4" id="us-ticker-wrap">
-                <div class="ticker-container animate-scroll-left" id="us-ticker">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="bg-slate-900 border-b border-slate-800 py-3 overflow-hidden shadow-inner relative z-10">
-        <div class="flex items-center">
-            <div class="bg-slate-800 text-white text-xs font-bold px-4 py-3 z-10 absolute left-0 flex items-center shadow-md uppercase tracking-wider h-full border-r border-slate-700">
-                BVL (Lima)
-            </div>
-            <div class="ticker-wrap w-full ml-24 pl-4" id="bvl-ticker-wrap">
-                <div class="ticker-container animate-scroll-right" id="bvl-ticker">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="servicios" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-bold text-burgundy-700 tracking-widest uppercase mb-2">Qué Hacemos</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Soluciones Corporativas Integrales</h3>
-                <div class="w-24 h-1 bg-burgundy-700 mx-auto mt-6 rounded-full"></div>
+                <button class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-brand-500/20 flex items-center">
+                    <i class="fa-solid fa-plus mr-2"></i> Nuevo Aporte
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="group bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-burgundy-200 hover:shadow-xl hover:shadow-burgundy-900/5 transition-all duration-300">
-                    <div class="w-14 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-burgundy-700 text-2xl mb-6 shadow-sm group-hover:bg-burgundy-700 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-server"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-slate-900 mb-3">Infraestructura IT</h4>
-                    <p class="text-slate-600 leading-relaxed mb-4">Diseño, implementación y mantenimiento de servidores, redes y arquitecturas cloud para garantizar la continuidad operativa de tu empresa.</p>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="group bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-burgundy-200 hover:shadow-xl hover:shadow-burgundy-900/5 transition-all duration-300">
-                    <div class="w-14 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-burgundy-700 text-2xl mb-6 shadow-sm group-hover:bg-burgundy-700 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-slate-900 mb-3">Ciberseguridad</h4>
-                    <p class="text-slate-600 leading-relaxed mb-4">Protegemos los activos más valiosos de tu organización mediante auditorías, firewalls de próxima generación y monitoreo de amenazas 24/7.</p>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="group bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-burgundy-200 hover:shadow-xl hover:shadow-burgundy-900/5 transition-all duration-300 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-burgundy-700 text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">
-                        Destacado
-                    </div>
-                    <div class="w-14 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-burgundy-700 text-2xl mb-6 shadow-sm group-hover:bg-burgundy-700 group-hover:text-white transition-colors relative z-10">
-                        <i class="fa-solid fa-coins"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-slate-900 mb-3 relative z-10">Inversiones Financieras</h4>
-                    <p class="text-slate-600 leading-relaxed mb-4 relative z-10">Asesoría especializada para diversificación de portafolios, análisis de renta variable y fija en los mercados de Perú (BVL) y Estados Unidos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="inversiones" class="py-24 bg-slate-50 border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-bold text-burgundy-700 tracking-widest uppercase mb-2">Hub de Inversiones</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Oportunidades y Vehículos Destacados</h3>
-                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">Seleccionamos las mejores estrategias e instrumentos para optimizar la eficiencia fiscal y los retornos de tu portafolio, tanto a nivel local como internacional.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Card 1: UCITS ETFs -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-                    <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-900 p-6 flex flex-col justify-end relative overflow-hidden">
-                        <i class="fa-solid fa-earth-europe absolute -right-6 -top-6 text-9xl text-white/5"></i>
-                        <h4 class="text-2xl font-bold text-white relative z-10">ETFs UCITS (Irlanda)</h4>
-                        <span class="text-slate-300 text-sm relative z-10">Eficiencia Fiscal Global</span>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <p class="text-slate-600 mb-4 text-sm leading-relaxed">Los ETFs domiciliados en Irlanda (UCITS) son ideales para inversionistas no residentes en EE.UU. Reducen la retención de impuestos a dividendos del 30% al 15% y evitan el impuesto a la herencia estadounidense.</p>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> CSPX (S&P 500 Acumulativo)</li>
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> VWRA (Acciones Globales)</li>
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> CNDX (Nasdaq-100)</li>
-                        </ul>
-                        <button class="mt-auto w-full py-2.5 rounded-lg border border-burgundy-700 text-burgundy-700 font-medium hover:bg-burgundy-50 transition-colors">Ver Guía Completa</button>
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-brand-500/10 rounded-full blur-xl group-hover:bg-brand-500/20 transition-all"></div>
+                    <p class="text-slate-400 text-sm font-medium mb-1">Patrimonio Total</p>
+                    <h2 class="text-3xl font-bold text-white mb-4">$45,231.80</h2>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded flex items-center font-medium">
+                            <i class="fa-solid fa-arrow-trend-up mr-1"></i> +2.4%
+                        </span>
+                        <span class="text-slate-500 ml-2">vs mes anterior</span>
                     </div>
                 </div>
-
-                <!-- Card 2: FIBRAs -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-                    <div class="h-48 bg-gradient-to-br from-burgundy-800 to-burgundy-950 p-6 flex flex-col justify-end relative overflow-hidden">
-                        <i class="fa-solid fa-building absolute -right-6 -top-6 text-9xl text-white/5"></i>
-                        <h4 class="text-2xl font-bold text-white relative z-10">FIBRAs / FIBIs</h4>
-                        <span class="text-slate-300 text-sm relative z-10">Bienes Raíces Locales (BVL)</span>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <p class="text-slate-600 mb-4 text-sm leading-relaxed">Fideicomisos de Titulización para Inversión en Renta de Bienes Raíces. Permiten invertir en inmuebles comerciales en Perú recibiendo flujos de efectivo constantes (dividendos) con beneficios tributarios.</p>
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> FIBRA Prime</li>
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> FIBRA Credicorp</li>
-                            <li class="flex items-center text-sm text-slate-700"><i class="fa-solid fa-check text-burgundy-600 mr-2"></i> Exoneración de impuesto a la renta (hasta cierto límite)</li>
-                        </ul>
-                        <button class="mt-auto w-full py-2.5 rounded-lg border border-burgundy-700 text-burgundy-700 font-medium hover:bg-burgundy-50 transition-colors">Analizar FIBRAs</button>
-                    </div>
-                </div>
-
-                <!-- Card 3: Brokers -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-                    <div class="h-48 bg-gradient-to-br from-slate-700 to-slate-800 p-6 flex flex-col justify-end relative overflow-hidden">
-                        <i class="fa-solid fa-mobile-screen-button absolute -right-6 -top-6 text-9xl text-white/5"></i>
-                        <h4 class="text-2xl font-bold text-white relative z-10">Guías de Brokers</h4>
-                        <span class="text-slate-300 text-sm relative z-10">Plataformas de Inversión</span>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <p class="text-slate-600 mb-4 text-sm leading-relaxed">Compara y elige el broker adecuado para tu perfil. Analizamos comisiones, regulación, facilidad de fondeo desde Perú y acceso a los diferentes mercados (BVL vs. Mercados Globales).</p>
-                        <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-center">
-                                <span class="block font-bold text-slate-800">Trii</span>
-                                <span class="text-xs text-slate-500">Ideal para BVL</span>
-                            </div>
-                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-center">
-                                <span class="block font-bold text-slate-800">XTB</span>
-                                <span class="text-xs text-slate-500">Forex & ETFs</span>
-                            </div>
-                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-center">
-                                <span class="block font-bold text-slate-800">Hapi</span>
-                                <span class="text-xs text-slate-500">Acciones USA</span>
-                            </div>
-                            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-center">
-                                <span class="block font-bold text-slate-800">IBKR</span>
-                                <span class="text-xs text-slate-500">Pro & UCITS</span>
-                            </div>
-                        </div>
-                        <button class="mt-auto w-full py-2.5 rounded-lg border border-burgundy-700 text-burgundy-700 font-medium hover:bg-burgundy-50 transition-colors">Comparador de Brokers</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="herramientas" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-bold text-burgundy-700 tracking-widest uppercase mb-2">Herramientas Pro</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Proyecta y Filtra tus Inversiones</h3>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 
-                <!-- Compound Interest Calculator -->
-                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 p-8">
-                    <div class="flex items-center justify-between mb-6">
-                        <h4 class="text-2xl font-bold text-slate-900"><i class="fa-solid fa-calculator text-burgundy-700 mr-2"></i> Interés Compuesto</h4>
-                    </div>
-                    <p class="text-sm text-slate-600 mb-6">Calcula el crecimiento de tu portafolio a lo largo del tiempo con aportes periódicos.</p>
-                    
-                    <form id="calc-form" class="space-y-5">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Capital Inicial (USD)</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">$</span>
-                                <input type="number" id="principal" class="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-burgundy-500 focus:border-burgundy-500 outline-none transition-colors" value="10000" min="0">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Aporte Mensual</label>
-                                <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">$</span>
-                                    <input type="number" id="monthly" class="w-full pl-8 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-burgundy-500 focus:border-burgundy-500 outline-none transition-colors" value="500" min="0">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Años a Invertir</label>
-                                <input type="number" id="years" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-burgundy-500 focus:border-burgundy-500 outline-none transition-colors" value="20" min="1">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Rendimiento Anual Estimado (%)</label>
-                            <input type="range" id="rate-slider" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-burgundy-700" min="1" max="20" value="8" step="0.5">
-                            <div class="text-right mt-1 font-bold text-burgundy-700"><span id="rate-display">8.0</span>%</div>
-                        </div>
-                        
-                        <button type="button" onclick="calculateInterest()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-lg transition-colors mt-4">
-                            Calcular Proyección
-                        </button>
-                    </form>
-
-                    <!-- Results Area -->
-                    <div class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 text-center">
-                        <span class="block text-sm text-slate-500 mb-1">Valor Futuro Estimado</span>
-                        <div class="text-4xl font-bold text-slate-900 mb-2" id="result-total">$ 342,759.00</div>
-                        <div class="flex justify-between text-sm mt-4 pt-4 border-t border-slate-200">
-                            <div class="text-left">
-                                <span class="block text-slate-500">Total Aportado</span>
-                                <span class="font-semibold text-slate-800" id="result-contributed">$ 130,000.00</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-slate-500">Interés Ganado</span>
-                                <span class="font-semibold text-green-600" id="result-interest">$ 212,759.00</span>
-                            </div>
-                        </div>
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-xl group-hover:bg-purple-500/20 transition-all"></div>
+                    <p class="text-slate-400 text-sm font-medium mb-1">Rendimiento Histórico</p>
+                    <h2 class="text-3xl font-bold text-white mb-4">+$8,420.50</h2>
+                    <div class="flex items-center text-sm">
+                        <span class="text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded flex items-center font-medium">
+                            <i class="fa-solid fa-arrow-trend-up mr-1"></i> +8.1%
+                        </span>
+                        <span class="text-slate-500 ml-2">anualizado (TIR)</span>
                     </div>
                 </div>
 
-                <!-- ETF Screener Mockup -->
-                <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 flex flex-col">
-                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
-                        <h4 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-filter text-burgundy-700 mr-2"></i> Screener de ETFs (Demo)</h4>
-                        <button class="text-sm text-burgundy-700 font-medium hover:underline">Ver todos</button>
+                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all"></div>
+                    <p class="text-slate-400 text-sm font-medium mb-1">Dividendos Recibidos (FIBRAs)</p>
+                    <h2 class="text-3xl font-bold text-white mb-4">S/ 1,240.00</h2>
+                    <div class="flex items-center text-sm">
+                        <span class="text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded flex items-center font-medium">
+                            <i class="fa-solid fa-coins mr-1"></i> Yield 7.5%
+                        </span>
+                        <span class="text-slate-500 ml-2">YTD</span>
                     </div>
-                    
-                    <div class="p-4 grid grid-cols-3 gap-2 border-b border-slate-100 bg-white">
-                        <select class="text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none">
-                            <option>Mercado: Todos</option>
-                            <option>EE.UU.</option>
-                            <option>Global</option>
-                            <option>Emergentes</option>
-                        </select>
-                        <select class="text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none">
-                            <option>Tipo: UCITS (Irlanda)</option>
-                            <option>Tipo: USA Domiciled</option>
-                        </select>
-                        <select class="text-xs bg-slate-50 border border-slate-200 rounded p-2 outline-none">
-                            <option>Sector: Tecnología</option>
-                            <option>Sector: S&P 500</option>
-                        </select>
-                    </div>
+                </div>
+            </div>
 
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Portfolio Table -->
+                <div class="lg:col-span-2 glass-panel rounded-2xl overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-dark-border flex justify-between items-center bg-slate-800/30">
+                        <h3 class="font-bold text-white">Composición del Portafolio</h3>
+                        <button class="text-slate-400 hover:text-white"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left text-slate-600">
-                            <thead class="text-xs text-slate-500 uppercase bg-slate-50">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-slate-400 uppercase bg-slate-800/50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">Ticker</th>
-                                    <th scope="col" class="px-6 py-3">Nombre / Enfoque</th>
-                                    <th scope="col" class="px-6 py-3 text-right">TER</th>
-                                    <th scope="col" class="px-6 py-3 text-right">YTD</th>
+                                    <th class="px-6 py-4 font-medium">Activo</th>
+                                    <th class="px-6 py-4 font-medium">Tipo</th>
+                                    <th class="px-6 py-4 font-medium text-right">Precio</th>
+                                    <th class="px-6 py-4 font-medium text-right">Rendimiento</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition-colors">
-                                    <td class="px-6 py-4 font-bold text-slate-900">CSPX</td>
-                                    <td class="px-6 py-4">iShares Core S&P 500 (Acc)</td>
-                                    <td class="px-6 py-4 text-right">0.07%</td>
-                                    <td class="px-6 py-4 text-right text-green-600 font-medium">+18.4%</td>
+                            <tbody class="divide-y divide-dark-border">
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs mr-3">CSPX</div>
+                                            <div>
+                                                <div class="font-bold text-white">iShares S&P 500</div>
+                                                <div class="text-xs text-slate-500">UCITS (XTB)</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-400">Renta Variable</td>
+                                    <td class="px-6 py-4 text-right text-white font-medium">$560.20</td>
+                                    <td class="px-6 py-4 text-right text-emerald-400 font-medium">+12.4%</td>
                                 </tr>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition-colors">
-                                    <td class="px-6 py-4 font-bold text-slate-900">VWRA</td>
-                                    <td class="px-6 py-4">Vanguard FTSE All-World</td>
-                                    <td class="px-6 py-4 text-right">0.22%</td>
-                                    <td class="px-6 py-4 text-right text-green-600 font-medium">+14.2%</td>
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs mr-3">CNDX</div>
+                                            <div>
+                                                <div class="font-bold text-white">iShares Nasdaq 100</div>
+                                                <div class="text-xs text-slate-500">UCITS (XTB)</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-400">Tecnología</td>
+                                    <td class="px-6 py-4 text-right text-white font-medium">$980.15</td>
+                                    <td class="px-6 py-4 text-right text-emerald-400 font-medium">+18.7%</td>
                                 </tr>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition-colors">
-                                    <td class="px-6 py-4 font-bold text-slate-900">CNDX</td>
-                                    <td class="px-6 py-4">iShares Nasdaq 100</td>
-                                    <td class="px-6 py-4 text-right">0.33%</td>
-                                    <td class="px-6 py-4 text-right text-green-600 font-medium">+38.7%</td>
-                                </tr>
-                                <tr class="bg-white hover:bg-slate-50 cursor-pointer transition-colors">
-                                    <td class="px-6 py-4 font-bold text-slate-900">VGT</td>
-                                    <td class="px-6 py-4">Vanguard Info Tech</td>
-                                    <td class="px-6 py-4 text-right">0.10%</td>
-                                    <td class="px-6 py-4 text-right text-green-600 font-medium">+42.1%</td>
+                                <tr class="hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs mr-3">FIBRA</div>
+                                            <div>
+                                                <div class="font-bold text-white">FIBRA Prime</div>
+                                                <div class="text-xs text-slate-500">Bienes Raíces (Trii)</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-slate-400">Renta Inmobiliaria</td>
+                                    <td class="px-6 py-4 text-right text-white font-medium">S/ 9.85</td>
+                                    <td class="px-6 py-4 text-right text-emerald-400 font-medium">+5.2%</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="p-4 mt-auto border-t border-slate-100 bg-slate-50 text-center rounded-b-2xl">
-                        <p class="text-xs text-slate-400">Datos simulados para fines ilustrativos. TER = Total Expense Ratio.</p>
+                </div>
+
+                <!-- Simulation Widget -->
+                <div class="glass-panel p-6 rounded-2xl flex flex-col">
+                    <h3 class="font-bold text-white mb-1">Simulador Rápido</h3>
+                    <p class="text-xs text-slate-400 mb-6">Proyecta tu interés compuesto</p>
+                    
+                    <div class="space-y-4 flex-1">
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">Aporte Mensual (USD)</label>
+                            <input type="number" value="300" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">Tasa Anual Esperada (%)</label>
+                            <input type="number" value="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="text-xs text-slate-400 mb-1 block">Plazo (Años)</label>
+                            <input type="number" value="20" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                        
+                        <div class="pt-4 border-t border-dark-border mt-4">
+                            <p class="text-xs text-slate-400 mb-1">Capital Final Proyectado</p>
+                            <p class="text-2xl font-bold text-brand-400">$227,811.23</p>
+                        </div>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-950 text-slate-300 py-12 border-t-4 border-burgundy-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-2 mb-4">
-                    <i class="fa-solid fa-infinity text-burgundy-500 text-2xl"></i>
-                    <span class="font-bold text-xl text-white">Absolute Horizon Tech</span>
-                </div>
-                <p class="text-sm text-slate-400 mb-6 max-w-sm">
-                    Empresa líder en soluciones integradas de Infraestructura IT, Ciberseguridad y Asesoría de Inversiones Globales y Locales (BVL).
-                </p>
-                <div class="flex space-x-4">
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-burgundy-700 transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-burgundy-700 transition-colors"><i class="fa-brands fa-twitter text-sm"></i></a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-burgundy-700 transition-colors"><i class="fa-solid fa-envelope text-sm"></i></a>
+                    <button class="w-full bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 rounded-lg py-2 mt-4 text-sm font-medium transition-colors">
+                        Ver Gráfico Completo
+                    </button>
                 </div>
             </div>
-            <div>
-                <h5 class="text-white font-bold mb-4">Enlaces Rápidos</h5>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#servicios" class="hover:text-burgundy-400 transition-colors">Servicios Corporativos</a></li>
-                    <li><a href="#inversiones" class="hover:text-burgundy-400 transition-colors">Hub de Inversiones</a></li>
-                    <li><a href="#" class="hover:text-burgundy-400 transition-colors">Aviso Legal</a></li>
-                    <li><a href="#" class="hover:text-burgundy-400 transition-colors">Política de Privacidad</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-white font-bold mb-4">Contacto</h5>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-burgundy-500"></i> San Isidro, Lima - Perú</li>
-                    <li class="flex items-center"><i class="fa-solid fa-phone mr-3 text-burgundy-500"></i> +51 987 654 321</li>
-                    <li class="flex items-center"><i class="fa-solid fa-at mr-3 text-burgundy-500"></i> contacto@absolutehorizon.com.pe</li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-xs text-center text-slate-500">
-            &copy; 2026 Absolute Horizon Tech S.A.C. Todos los derechos reservados. <br>
-            La información financiera proporcionada no constituye una recomendación directa de compra/venta. Toda inversión conlleva riesgos.
-        </div>
-    </footer>
-
-    <script>
-        // --- TICKER DATA GENERATION ---
-        const usStocks = [
-            { sym: 'SPY', name: 'S&P 500', price: '542.10', chg: '+1.2%', up: true },
-            { sym: 'QQQ', name: 'Nasdaq 100', price: '458.35', chg: '+1.5%', up: true },
-            { sym: 'AAPL', name: 'Apple Inc.', price: '192.25', chg: '-0.3%', up: false },
-            { sym: 'MSFT', name: 'Microsoft', price: '415.80', chg: '+0.8%', up: true },
-            { sym: 'NVDA', name: 'NVIDIA', price: '125.40', chg: '+3.4%', up: true },
-            { sym: 'TSLA', name: 'Tesla', price: '178.90', chg: '-1.1%', up: false },
-            { sym: 'VOO', name: 'Vanguard 500', price: '497.50', chg: '+1.1%', up: true },
-            { sym: 'CSPX', name: 'iShares S&P 500', price: '560.20', chg: '+1.2%', up: true }
-        ];
-
-        const bvlStocks = [
-            { sym: 'BAP', name: 'Credicorp Ltd.', price: '154.20', chg: '+0.5%', up: true },
-            { sym: 'SCCO', name: 'Southern Copper', price: '112.45', chg: '+2.1%', up: true },
-            { sym: 'ALICORC1', name: 'Alicorp', price: '6.45', chg: '-0.8%', up: false },
-            { sym: 'INRETC1', name: 'InRetail Peru', price: '32.10', chg: '+0.2%', up: true },
-            { sym: 'CPACASC1', name: 'Cementos Pacasmayo', price: '4.15', chg: '0.0%', up: true },
-            { sym: 'BVN', name: 'Minas Buenaventura', price: '14.80', chg: '-1.5%', up: false },
-            { sym: 'FIBRA', name: 'FIBRA Prime', price: '9.85', chg: '+0.1%', up: true }
-        ];
-
-        function createTickerHtml(stocks) {
-            let html = '';
-            stocks.forEach(stock => {
-                const colorClass = stock.up ? 'text-green-500' : (stock.chg === '0.0%' ? 'text-slate-400' : 'text-red-500');
-                const icon = stock.up ? 'fa-caret-up' : (stock.chg === '0.0%' ? 'fa-minus' : 'fa-caret-down');
-                
-                html += `
-                    <div class="inline-flex items-center px-6 border-r border-slate-700/50 h-10">
-                        <span class="font-bold text-white mr-2">${stock.sym}</span>
-                        <span class="text-slate-400 text-xs mr-3 hidden sm:inline">${stock.name}</span>
-                        <span class="text-white mr-2">${stock.price}</span>
-                        <span class="${colorClass} text-sm font-medium flex items-center">
-                            <i class="fa-solid ${icon} mr-1"></i> ${stock.chg}
-                        </span>
-                    </div>
-                `;
-            });
-            // Duplicate content for seamless scrolling
-            return html + html; 
-        }
-
-        document.getElementById('us-ticker').innerHTML = createTickerHtml(usStocks);
-        document.getElementById('bvl-ticker').innerHTML = createTickerHtml(bvlStocks);
-
-
-        // --- COMPOUND INTEREST CALCULATOR ---
-        const slider = document.getElementById('rate-slider');
-        const rateDisplay = document.getElementById('rate-display');
-
-        slider.oninput = function() {
-            rateDisplay.innerHTML = parseFloat(this.value).toFixed(1);
-        }
-
-        function calculateInterest() {
-            const p = parseFloat(document.getElementById('principal').value) || 0;
-            const pmt = parseFloat(document.getElementById('monthly').value) || 0;
-            const r = parseFloat(document.getElementById('rate-slider').value) / 100;
-            const t = parseFloat(document.getElementById('years').value) || 0;
-            const n = 12; // Monthly compounding
-
-            // Future Value of Principal: P(1 + r/n)^(nt)
-            const fvPrincipal = p * Math.pow(1 + (r / n), n * t);
             
-            // Future Value of Series: PMT * [((1 + r/n)^(nt) - 1) / (r/n)]
-            let fvSeries = 0;
-            if (r > 0) {
-                fvSeries = pmt * ((Math.pow(1 + (r / n), n * t) - 1) / (r / n));
-            } else {
-                fvSeries = pmt * n * t;
-            }
-
-            const totalFutureValue = fvPrincipal + fvSeries;
-            const totalContributed = p + (pmt * n * t);
-            const totalInterest = totalFutureValue - totalContributed;
-
-            // Format numbers to USD currency format
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            });
-
-            // Update DOM with simple animation effect
-            updateDomWithAnimation('result-total', formatter.format(totalFutureValue));
-            document.getElementById('result-contributed').innerText = formatter.format(totalContributed);
-            document.getElementById('result-interest').innerText = formatter.format(totalInterest);
-        }
-
-        function updateDomWithAnimation(elementId, value) {
-            const el = document.getElementById(elementId);
-            el.style.opacity = '0';
-            setTimeout(() => {
-                el.innerText = value;
-                el.style.transition = 'opacity 0.3s ease';
-                el.style.opacity = '1';
-            }, 150);
-        }
-
-        // Initialize calculator on load
-        window.onload = () => {
-            calculateInterest();
-        };
-
-        // --- NAVBAR STICKY EFFECT ---
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                nav.classList.add('shadow-md');
-                nav.classList.remove('shadow-sm');
-            } else {
-                nav.classList.remove('shadow-md');
-                nav.classList.add('shadow-sm');
-            }
-        });
-    </script>
+        </div>
+    </main>
 </body>
 </html>
+
