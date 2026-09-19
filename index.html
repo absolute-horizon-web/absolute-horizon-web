@@ -244,30 +244,54 @@
                     <div class="space-y-4 flex-1">
                         <div>
                             <label class="text-xs text-slate-400 mb-1 block">Aporte Mensual (USD)</label>
-                            <input type="number" value="300" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                            <input type="number" id="sim-aporte" value="300" oninput="calcularSimulador()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
                         </div>
                         <div>
                             <label class="text-xs text-slate-400 mb-1 block">Tasa Anual Esperada (%)</label>
-                            <input type="number" value="10" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                            <input type="number" id="sim-tasa" value="10" oninput="calcularSimulador()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
                         </div>
                         <div>
                             <label class="text-xs text-slate-400 mb-1 block">Plazo (Años)</label>
-                            <input type="number" value="20" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
+                            <input type="number" id="sim-plazo" value="20" oninput="calcularSimulador()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-brand-500 transition-colors">
                         </div>
                         
                         <div class="pt-4 border-t border-dark-border mt-4">
                             <p class="text-xs text-slate-400 mb-1">Capital Final Proyectado</p>
-                            <p class="text-2xl font-bold text-brand-400">$227,811.23</p>
+                            <p class="text-2xl font-bold text-brand-400" id="sim-resultado">$227,811.23</p>
                         </div>
                     </div>
-                    <button class="w-full bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 rounded-lg py-2 mt-4 text-sm font-medium transition-colors">
-                        Ver Gráfico Completo
+                    <button onclick="calcularSimulador()" class="w-full bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 rounded-lg py-2 mt-4 text-sm font-medium transition-colors">
+                        Recalcular Proyección
                     </button>
                 </div>
             </div>
             
         </div>
     </main>
+
+    <script>
+        function calcularSimulador() {
+            let pmt = parseFloat(document.getElementById('sim-aporte').value) || 0;
+            let r = (parseFloat(document.getElementById('sim-tasa').value) || 0) / 100;
+            let t = parseFloat(document.getElementById('sim-plazo').value) || 0;
+            let n = 12;
+            let fv = 0;
+            
+            if (r > 0) {
+                fv = pmt * ((Math.pow(1 + (r / n), n * t) - 1) / (r / n));
+            } else {
+                fv = pmt * n * t;
+            }
+            
+            document.getElementById('sim-resultado').innerText = new Intl.NumberFormat('en-US', {
+                style: 'currency', 
+                currency: 'USD'
+            }).format(fv);
+        }
+        
+        // Ejecutar el cálculo automático al cargar la página
+        window.addEventListener('DOMContentLoaded', calcularSimulador);
+    </script>
 </body>
 </html>
 
